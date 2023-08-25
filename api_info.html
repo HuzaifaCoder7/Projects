@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Card</title>
+    <style>
+        #top{
+            text-align: center;
+        }
+        #form{
+            border:1px solid blueviolet;
+            border-radius: 20px;
+            width: 25rem;
+            height: 30rem;
+            margin-left: 27rem;
+            margin-top: 7rem;
+            text-align: center;
+            justify-content: center;
+            
+            
+        }
+        #name,#location,#followers,#bio{
+            font-weight: bold;
+            margin-top: 4rem;
+        }
+        #inp{
+            margin-top: 6rem;
+            margin-left: 4rem;
+            background: transparent;
+            color:blueviolet;
+            border:1px solid blueviolet;
+            border-radius: 10rem;
+            height: 2rem;
+            text-align: center;
+        }
+        #label{
+            margin-left: 23rem;
+            font-size: large;
+            
+        }
+        #btn{
+            margin-left: 4rem;
+            height: 2rem;
+            width: 5rem;
+            border-radius: 5rem;
+            background-color: transparent;
+            color:cyan;
+            border:0.5px solid cyan;
+        }
+        #btn:hover{background-color: cyan; color: black; transition: 0.4s;}
+    </style>
+</head>
+<body style="background-color: #212121; color:aliceblue;">
+    <h1 id="top">Github API Info: </h1>
+    <label for="" id="label">Enter Username: </label>
+    <input type="text" name="" id="inp">
+    
+    <button type="button" id="btn">Submit</button>
+    <form id="form">
+          <div id="name"></div>
+          <div id="location"> </div>
+          <div id="followers"> </div>
+          <div id="bio"> </div>
+    </form>
+</body>
+<script>
+     let name = document.getElementById('name')
+     let loc = document.getElementById('location')
+     let followers = document.getElementById('followers')
+     let bio = document.getElementById('bio')
+
+    
+    //  let inp = prompt("Enter Username: ")
+  
+
+   document.getElementById('btn').addEventListener('click',()=>{
+    let inp = document.getElementById('inp').value;
+    
+    const http = new XMLHttpRequest();
+    // let url = 'https://api.github.com/users/huzaifacoder7';
+    let url = 'https://api.github.com/users/'+inp;
+    
+    http.open('GET',url)
+    http.onreadystatechange = function(){
+        if(http.readyState===4){
+            let data = JSON.parse(this.response);
+            name.innerHTML = `<span style="color:cyan;">Name:</span>  <span style='color:orange;'>${data.name}</span>`;
+            loc.innerHTML = `<span style="color:cyan;">Country:</span>  <span style='color:orange;'>${data.location}</span>`;
+            followers.innerHTML = `<span style="color:cyan;">Followers:</span>  <span style='color:orange;'>${data.followers}</span>`;
+            bio.innerHTML = `<span style="color:cyan;">Bio:</span>   <span style='color:orange;'>${data.bio}</span>`;
+        }
+    }
+    http.send()
+   })
+</script>
+</html>
